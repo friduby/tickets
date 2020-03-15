@@ -8,6 +8,10 @@ def get_prices(request):
     response = json.loads(requests.post('http://localhost:8081/start_procedure', data={
             'args': json.dumps({
                 'callback_url': 'http://localhost:8000/callback',
+                'source': request.GET.get('source'),
+                'target': request.GET.get('target'),
+                'adult': request.GET.get('adult'),
+                'date': request.GET.get('date')
             }),
             'ref_code': 'req'+str(g.pk),
             'procedure_id': 1
