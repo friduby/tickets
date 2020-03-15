@@ -11,3 +11,8 @@ class Global(models.Model):
         else:
             ins = Global.objects.create()
         return ins
+
+class Request(models.Model):
+    data1 = models.TextField(blank=True, null=True)
+    data2 = models.TextField(blank=True, null=True)
+    data3 = models.TextField(blank=True, null=True)
