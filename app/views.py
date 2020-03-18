@@ -24,7 +24,7 @@ def get_prices(request):
                 'adult': request.GET.get('adult'),
                 'date': request.GET.get('date')
             }),
-            'ref_code': 'req'+str(g.pk),
+            'ref_code': 'rek'+str(g.pk),
             'procedure_id': 2
         }).text)
     return JsonResponse({"status": response['status']})
