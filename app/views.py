@@ -46,7 +46,7 @@ def callback(request):
 
             if i == 2:
                 result = []
-                for t in json.loads(r.data1)['tickets']+json.loads(r.data2)['tickets']+json.loads(r.data3)['tickets']:
+                for t in json.loads(r.data1)['tickets']+json.loads(r.data2)['tickets']:
                     t['class'] = t['class'].split()[-1]
                     ind = find_ticket_in_list(t, result)
                     if ind != -1:
@@ -57,6 +57,7 @@ def callback(request):
                         result.append(t)
                 
                 print ('#RESULT ', result)
+                r.data3 = json.dumps(sorted(result, key=lambda x: x['price'])[-1])
             break
     r.save()
     return JsonResponse({"status": True})
