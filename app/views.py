@@ -27,6 +27,14 @@ def get_prices(request):
             'ref_code': 'rek'+str(g.pk),
             'procedure_id': 2
         }).text)
+    with open('app/static/{}.txt'.format(g.pk), 'a') as f:
+        f.write(json.dumps({
+                'callback_url': 'http://localhost:8000/callback',
+                 'source': request.GET.get('source'),
+                'target': request.GET.get('target'),
+                'adult': request.GET.get('adult'),
+                'date': request.GET.get('date')
+            }) + "\n")
     return JsonResponse({"status": response['status']})
 
 def find_ticket_in_list(ticket, ls):
@@ -59,5 +67,8 @@ def callback(request):
                 print ('#RESULT ', result)
                 r.data3 = json.dumps(sorted(result, key=lambda x: x['price'])[-1])
             break
+    
+    with open('app/static/{}.txt'.format(g.pk), 'a') as f:
+        f.write('\n'.join([r.data1, r.data2, r.data3]))
     r.save()
     return JsonResponse({"status": True})
