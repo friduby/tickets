@@ -65,9 +65,9 @@ def callback(request):
                 
                 print ('#RESULT ', result)
                 r.data3 = json.dumps(sorted(result, key=lambda x: x['price'])[-1])
+                with open('app/static/{}.txt'.format(r.pk), 'a') as f:
+                    f.write('\n'.join([r.data1, r.data2, r.data3]))
             break
     
-    with open('app/static/{}.txt'.format(r.pk), 'a') as f:
-        f.write('\n'.join([r.data1, r.data2, r.data3]))
     r.save()
     return JsonResponse({"status": True})
